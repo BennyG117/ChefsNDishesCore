@@ -8,79 +8,78 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ChefsNDishesCore.Models;
 public class Chef
-{        
-    [Key]        
+{
+    [Key]
     public int ChefId { get; set; }
-    
-    [Required]        
-    public string FirstName { get; set; }
-    
-    [Required]        
-    public string LastName { get; set; }         
 
-    [Required]        
-    //TODO: Must complete adding validation for a date from the past
-    //!Will require its own class - see below - look at custom validations from LEARN*
-    [DateOfBirthInPast(ErrorMessage = "Date of Birth must be in the past.")]
+    [Required]
+    public string FirstName { get; set; }
+
+    [Required]
+    public string LastName { get; set; }
+
+    [Required]
+    //Will require its own class - see below - look at custom validations from LEARN*
+    [DateOfBirthInPast]
     [DataType(DataType.Date)]
     [Display(Name = "Date of Birth")]
-    public DateTime DateOfBirth { get; set; }         
-    
+    public DateTime DateOfBirth { get; set; }
+
 
     //created/updated at  ======================== 
-    public DateTime CreatedAt {get;set;} = DateTime.Now;        
-    public DateTime UpdatedAt {get;set;} = DateTime.Now;
-    
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime UpdatedAt { get; set; } = DateTime.Now;
+
 
 
     //(REQUIRED TO MAKE "INCLUDE" POSSIBLE) list of Dish objects (adding to an empty list of Dish objects):
-    public List<Dish> ChefDishes {get; set;} = new List<Dish>();
+    public List<Dish> ChefDishes { get; set; } = new List<Dish>();
 
 
 }
-//TODO:Make the class ===========================
-//! Add new class for DOB Validation here*
+// Add new class for DOB Validation here*
 public class DateOfBirthInPastAttribute : ValidationAttribute
 {
-  public override bool IsValid(object value)
+    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
     {
-        DateTime date;
-        DateTime.TryParse(value.ToString(), out date);
-            if(date.Day >= DateTime.Today.Day)
-            {
-                return false;
-            }
-        
-            return true;
+        DateTime Now = DateTime.Now;
+        DateTime Input = (DateTime)value;
+
+
+        if (Input > Now)
+        {
+            return new ValidationResult("Date of Birth must be in the past.");
+        } else {
+            return ValidationResult.Success;
         }
     }
+}
 
 
+//  ============================================
+//? Setting up Login & Registration:
+//  ============================================
+// [Required]
+// [EmailAddress]
+// //Adding unique
+// [UniqueEmail]
+// public string Email { get; set; }        
 
-    //  ============================================
-    //? Setting up Login & Registration:
-    //  ============================================
-    // [Required]
-    // [EmailAddress]
-    // //Adding unique
-    // [UniqueEmail]
-    // public string Email { get; set; }        
-    
-    //?password  ======================== 
-    // [Required]
-    // [DataType(DataType.Password)]
-    // [MinLength(8, ErrorMessage = "Password must be at least 8 characters")]
-    // public string Password { get; set; }          
-    
+//?password  ======================== 
+// [Required]
+// [DataType(DataType.Password)]
+// [MinLength(8, ErrorMessage = "Password must be at least 8 characters")]
+// public string Password { get; set; }          
 
-    //?Password confirm  ======================== 
-    // // This does not need to be moved to the bottom
-    // // But it helps make it clear what is being mapped and what is not
-    // [NotMapped]
-    // // There is also a built-in attribute for comparing two fields we can use!
-    // [Compare("Password")]
-    // [DataType(DataType.Password)]
-    // public string PasswordConfirm { get; set; }
+
+//?Password confirm  ======================== 
+// // This does not need to be moved to the bottom
+// // But it helps make it clear what is being mapped and what is not
+// [NotMapped]
+// // There is also a built-in attribute for comparing two fields we can use!
+// [Compare("Password")]
+// [DataType(DataType.Password)]
+// public string PasswordConfirm { get; set; }
 
 
 
@@ -100,7 +99,7 @@ public class DateOfBirthInPastAttribute : ValidationAttribute
 //     	    // If it was, return the required error
 //             return new ValidationResult("Email is required!");
 //         }
-    
+
 //     	// This will connect us to our database since we are not in our Controller
 //         MyContext _context = (MyContext)validationContext.GetService(typeof(MyContext));
 //         // Check to see if there are any records of this email in our database
