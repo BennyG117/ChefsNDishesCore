@@ -36,7 +36,7 @@ public class DishController : Controller
     [HttpGet("/dishes")]
     public IActionResult AllDishes()
     {
-        List<Dish> allDishes = db.Dishes.Include(p => p.Creator).ToList();
+        List<Dish> allDishes = db.Dishes.Include(p => p.Creator).OrderByDescending(d => d.CreatedAt).ToList();
         return View("AllDishes", allDishes);
     }
 
@@ -63,6 +63,7 @@ public class DishController : Controller
     {
         if(!ModelState.IsValid)
         {
+            ViewBag.allChefs = db.Chefs.ToList();
             return View("NewDish");
         }
         // newDish.DishId = (int) HttpContext.Session.GetInt32("UUID");

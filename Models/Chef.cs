@@ -38,20 +38,20 @@ public class Chef
 
 
 }
-//TODO:Make the class:
+//TODO:Make the class ===========================
 //! Add new class for DOB Validation here*
-public class DateOfBirthInPast : ValidationAttribute
+public class DateOfBirthInPastAttribute : ValidationAttribute
 {
-  protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+  public override bool IsValid(object value)
     {
-        if (value is DateTime dateOfBirth)
-        {
-            if(dateOfBirth >= DateTime.Now)
+        DateTime date;
+        DateTime.TryParse(value.ToString(), out date);
+            if(date.Day >= DateTime.Today.Day)
             {
-                return new ValidationResult(ErrorMessage);
+                return false;
             }
-        }
-            return ValidationResult.Success;
+        
+            return true;
         }
     }
 

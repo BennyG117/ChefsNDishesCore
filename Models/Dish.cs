@@ -26,11 +26,6 @@ public class Dish
     public int Calories {get; set;}
 
 
-    // Dishes Chef ======================== 
-    [Required]
-    public string DishChef {get; set;}
-
-
     // Tastiness ======================== 
     [Required]
     [Range(1,5, ErrorMessage = "You must include a Tastiness score between 1 - 5.")]    

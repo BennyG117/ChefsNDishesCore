@@ -10,20 +10,20 @@
 </head>
 <body>
     <header>
-    <nav class="navbar d-flex justify-content-center ">
-        <ul>
+    <nav class="d-flex flex-row justify-content-center align-content-center mt-5 p-2 text-center">
+        <ul class="d-flex list-unstyled align-items-center text-center">
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Chef" asp-action="Index">Chefs</a>
             </li>       
-            | 
+            <p>|</p>
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Dish" asp-action="AllDishes">Dishes</a>
             </li>
-            |        
+            <p>|</p>
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Chef" asp-action="NewChef">Add a Chef</a>
             </li>
-            |        
+            <p>|</p>
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Dish" asp-action="NewDish">Add a Dish</a>
             </li>        

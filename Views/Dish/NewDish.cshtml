@@ -1,0 +1,67 @@
+@* Add a New Dish page *@
+
+@model Dish
+
+
+<div class="d-flex flex-column justify-content-center align-items-center">
+    <h1>Add a chef</h1>
+    <hr class="w-75"/>
+
+    <form asp-action="CreateDish" asp-controller="Dish" method="post" class="shadow p-3 rounded d-flex flex-column p-2 justify-content-center w-100">
+        <div class="d-flex">
+            <div class="d-flex">
+                @* Column 1 *@
+                <div class="w-100 me-2 text-start">
+                    @* section *@
+                    <div class="mb-3 ">
+                        <label asp-for="DishName">Name of Dish</label>
+                        <input asp-for="DishName" type="text" class="form-control" placeholder="Dish name name here..."/>
+                        <span asp-validation-for="DishName" class="text-danger font-weight-bold"></span>
+                    </div>
+                    @* section *@
+                    <div class="mb-3">
+                        <label asp-for="Calories"># of Calories</label>
+                        <input asp-for="Calories" type="int" class="form-control" placeholder="Enter calories here..."/>
+                        <span asp-validation-for="Calories" class="text-danger font-weight-bold"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="d-flex">
+            @* Column 2 - section *@
+                <div class="mb-3 w-100 me-2 text-center">
+                    <label asp-for="ChefId"></label>
+                    <select asp-for="ChefId"  class="form-control" name="ChefId">
+                        <option value="">Select a Chef</option>
+                        @foreach (Chef chef in ViewBag.allChefs)
+                        {
+                        <option value="@chef.ChefId">@chef.FirstName @chef.LastName</option>
+                        }
+                    </select>
+                    <span asp-validation-for="ChefId" class="text-danger font-weight-bold"></span>
+                </div>
+            </div>
+            <div class="d-flex">
+                @* Column 3 - section *@
+                <div class="mb-3 w-100 me-2 text-center">
+                    <label asp-for="Tastiness"></label>
+                    <select asp-for="Tastiness"  class="form-control" name="Tastiness">
+                        <option value="">Select a number</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                    <span asp-validation-for="Tastiness" class="text-danger font-weight-bold"></span>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="text-end me-5"><button class="btn btn-outline-dark shadow">Add a Dish</button>
+        </div>
+    </form>
+
+
+</div>
